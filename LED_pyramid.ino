@@ -12,7 +12,7 @@ int buttonPin = 2;
 // Režimy
 // 1-6 = Animace
 // 7 = Automaticky (Pevná sekvence)
-// 8 = Náhodně (Bez opakování)
+// 8 = Náhodně
 // 9 = Svítí vše
 int rezim = 0; 
 int maxRezim = 9; 
@@ -61,11 +61,13 @@ void aktualizujDisplej() {
   lcd.clear(); 
   
   lcd.setCursor(0, 0); 
+  // Vykreslování čísla režimu
   lcd.print("REZIM: ");
   lcd.print(rezim);
   
   lcd.setCursor(0, 1); 
-  
+
+  // Vykreslování textu
   switch(rezim) {
     case 0: lcd.print("VYPNUTO"); break;
     case 1: lcd.print("ZLEVA DO PRAVA"); break;
@@ -80,10 +82,10 @@ void aktualizujDisplej() {
   }
 }
 
-// --- REŽIM 7: PEVNÁ SEKVENCE (PENDLOVÁNÍ) ---
+// --- REŽIM 7: PEVNÁ SEKVENCE ---
 void animaceAutomatickyPevna() {
   
-  // 1. ČÁST: PENDLOVÁNÍ LEVÁ/PRAVÁ (3x tam a zpět)
+  // 1. ČÁST: LEVÁ/PRAVÁ (3x tam a zpět)
   for(int i=0; i<3; i++) {
     animaceZlevaDoprava(); 
     if (rezim != 7) return; 
@@ -92,13 +94,13 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 2. ČÁST: 3x PULZ (NOVÉ)
+  // 2. ČÁST: 3x PULZ
   for(int i=0; i<3; i++) {
     animacePulzovani();
     if (rezim != 7) return;
   }
 
-  // 3. ČÁST: PENDLOVÁNÍ STŘED/STRANY (3x ven a dovnitř)
+  // 3. ČÁST: STŘED/STRANY (3x ven a dovnitř)
   for(int i=0; i<3; i++) {
     animaceStredDoStran();   
     if (rezim != 7) return;
@@ -107,7 +109,7 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 4. ČÁST: 6x SUDÉ/LICHÉ (NOVÉ)
+  // 4. ČÁST: 6x SUDÉ/LICHÉ
   for(int i=0; i<6; i++) {
     animaceSudeLiche();
     if (rezim != 7) return;
@@ -149,7 +151,7 @@ void animaceNahodne() {
   }
 }
 
-// --- OVLÁDÁNÍ ---
+// --- OVLÁDÁNÍ TLAČÍTKEM ---
 bool kontrolaTlacitka() {
   if (digitalRead(buttonPin) == LOW) {
     delay(50); 
