@@ -6,7 +6,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // --- NASTAVENÍ PINŮ ---
 int ledPins[] = {12, 11, 10, 9, 8, 7, 6, 5, 4}; 
-int pocetLed = 9;
+int pocetLed = 9; // Počet led připojených na piny
 int buttonPin = 2; 
 
 // Režimy
