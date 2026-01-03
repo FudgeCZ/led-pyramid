@@ -4,7 +4,8 @@
 
 - Třída : MET4
 
-(obrázek hotové práce)
+<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/f1aac288-7a88-4180-be98-3ab10e3ecfb2" />
+
 
 ## **_Úvod do projektu:_**
 
@@ -48,6 +49,8 @@ Mechanická stránka projektu se skládá ze dvou hlavních částí: samotné p
 - **Konstrukce pyramidy:** Pyramida je sestavena pomocí prostorového pájení. Diody drží pohromadě díky spájeným vývodům (katody a anody), které tvoří pevnou mřížku.
 - **3D Tisk:** Aby LCD displej pevně držel na nepájivém poli a byl v dobré poloze pro čtení, navrhl jsem a vytiskl speciální plastové nožičky zasouvací do nepájivého pole pro stabilitu. Ty zajišťují lepší čitelnost displeje a hezčí vzhled celého zařízení.
 
+## **_Elektrické zapojení_**
+<img width="498" height="440" alt="image" src="https://github.com/user-attachments/assets/86e18aa3-f8b3-4c10-874f-bcb6c8a27469" />
 
 Zapojení je realizováno na nepájivém poli. Projekt byl nejprve zapojen v online nástroji Tinkercad, kde se jednoduše dá navrhnout a naprogramovat Arduino a další různé zařízení. Zapojení elektroniky podle schéma:
 
