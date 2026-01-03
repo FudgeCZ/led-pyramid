@@ -15,11 +15,11 @@ int buttonPin = 2;
 // 7 = Automaticky (Pevná sekvence)
 // 8 = Náhodně (Bez opakování)
 // 9 = Svítí vše
-int rezim = 0; 
+int rezim = 0; // Výchozí režim při zapnutí
 int maxRezim = 9; 
 
-int rychlost = 100;   
-int pauzaKonec = 200; 
+int rychlost = 100; // Čím vyšší tím pomalejší
+int pauzaKonec = 150; 
 
 void setup() {
   // LED
