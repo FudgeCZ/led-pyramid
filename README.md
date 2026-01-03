@@ -11,6 +11,31 @@
 
 <img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/f1aac288-7a88-4180-be98-3ab10e3ecfb2" />
 
+## Obsah
+
+[Úvod do projektu](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#úvod-do-projektu)
+
+[Co je to a princip](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#co-je-to-a-princip)
+
+[Hlavní cíl projektu](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#hlavní-cíl-projektu)
+
+[Použité komponenty](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#použité-komponenty)
+
+[Mechanická konstrukce a 3D tisk](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#mechanická-konstrukce-a-3d-tisk)
+
+[Elektrické zapojení](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#elektrické-zapojení)
+
+[Ovládání a režimy](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#ovládání-a-režimy)
+
+[Pájení](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#pájení)
+
+[Testování funkcí](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#testování-funkcí)
+
+[Výsledné zařízení](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#výsledné-zařízení)
+
+[Závěr](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#závěr)
+
+[Zdroje](https://github.com/FudgeCZ/led-pyramid/tree/main?tab=readme-ov-file#zdroje)
 
 ## **_Úvod do projektu:_**
 
