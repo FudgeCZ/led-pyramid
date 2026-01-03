@@ -9,7 +9,8 @@
 
 - Třída : MET4
 
-<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/f1aac288-7a88-4180-be98-3ab10e3ecfb2" />
+<img width="900" height="548" alt="image" src="https://github.com/user-attachments/assets/e040081d-c241-40d7-a369-b35a0420dec0" />
+
 
 ## Obsah
 
@@ -67,10 +68,25 @@ Hlavním cílem této ročníkové práce bylo navrhnout a sestavit komplexní e
 Pro realizaci zařízení byly vybrány následující klíčové součástky:
 
 - **Arduino Nano (USB-C):** Kompaktní vývojová. Zvolena pro své malé rozměry vhodné do nepájivého pole a moderní USB-C konektor.
+
+  <img width="353" height="214" alt="image" src="https://github.com/user-attachments/assets/f9706c00-d4c8-4ef6-8200-14ad2e74c874" />
+
 - **LED diody (19 ks):** 5mm diody, které tvoří vizuální část projektu.
+
+  <img width="352" height="198" alt="image" src="https://github.com/user-attachments/assets/03625dfa-ecf0-4a26-a5f3-3bdc73a94962" />
+
 - **LCD Displej 1602 s I2C převodníkem:** Zobrazuje textové informace (2 řádky po 16 znacích). Díky I2C modulu vyžaduje pouze 2 datové piny (A5/A6).
+
+  <img width="391" height="220" alt="image" src="https://github.com/user-attachments/assets/70f2d0dc-bc25-4c35-94cf-b51aaff9c7cb" /> <img width="387" height="218" alt="image" src="https://github.com/user-attachments/assets/b1c476d4-4d1b-4c03-8ab7-55e01e6f7d67" />
+
 - **Rezistory (220 Ω - 9 ks):** Ochranné prvky zapojené v sérii k LED diodám pro omezení proudu.
+
+  <img width="357" height="201" alt="image" src="https://github.com/user-attachments/assets/f8d84537-7f3c-4765-b744-9b4fc7a624c3" />
+
 - **Tlačítko:** Slouží k přepínání režimů.
+
+  <img width="238" height="200" alt="image" src="https://github.com/user-attachments/assets/fc57c152-f210-4e84-b9b7-62c38e1ea352" />
+
 - **Nepájivé pole a propojovací vodiče:** Pro flexibilní sestavení obvodu.
 
 ## **_Mechanická konstrukce a 3D tisk:_**
@@ -79,6 +95,7 @@ Mechanická stránka projektu se skládá ze dvou hlavních částí: samotné p
 
 - **Konstrukce pyramidy:** Pyramida je sestavena pomocí prostorového pájení. Diody drží pohromadě díky spájeným vývodům (katody a anody), které tvoří pevnou mřížku.
 - **3D Tisk:** Aby LCD displej pevně držel na nepájivém poli a byl v dobré poloze pro čtení, navrhl jsem a vytiskl speciální plastové nožičky zasouvací do nepájivého pole pro stabilitu. Ty zajišťují lepší čitelnost displeje a hezčí vzhled celého zařízení.
+<img width="289" height="272" alt="image" src="https://github.com/user-attachments/assets/008942f8-f305-41c3-bfdd-1a9ea6424820" />
 
 ## **_Elektrické zapojení_**
 <img width="498" height="440" alt="image" src="https://github.com/user-attachments/assets/86e18aa3-f8b3-4c10-874f-bcb6c8a27469" />
@@ -101,30 +118,75 @@ Režimy se dají jednoduše přidat a upravit, stačí přidat funkce a text pro
 **Seznam naprogramovaných režimů:**
 
 - **Režim 0 (Vypnuto):** Všechny LED zhasnou, zařízení čeká.
+
+  <img width="475" height="259" alt="image" src="https://github.com/user-attachments/assets/81b2bd9d-f86a-4779-bac5-7fd434642880" />
+  
 - **Režim 1 (Zleva doprava):** Postupné rozsvěcení a zhasínání řad diod z jedné strany na druhou.
+
+  <img width="482" height="267" alt="image" src="https://github.com/user-attachments/assets/12887646-4b59-48ff-a5c9-b0788e17c4a5" />
+
 - **Režim 2 (Zprava doleva):** Inverzní animace k režimu 1.
+
+  <img width="486" height="272" alt="image" src="https://github.com/user-attachments/assets/17f0594d-17a0-4466-b293-70f59127f01b" />
+
 - **Režim 3 (Střed -> Ven):** Efekt, kdy se světlo šíří od prostředního sloupce směrem k okrajům.
+
+  <img width="483" height="261" alt="image" src="https://github.com/user-attachments/assets/7403a35b-9409-4600-8ddc-5919372c7fc7" />
+
 - **Režim 4 (Ven -> Střed):** Světlo se "stahuje" z okrajů do středu pyramidy.
+
+  <img width="484" height="287" alt="image" src="https://github.com/user-attachments/assets/3b4f9506-37a3-4ac3-ba85-bf52c22120eb" />
+
 - **Režim 5 (Pulzování):** Speciální režim využívající softwarové PWM (rychlé spínání signálů). Jas diod se plynule zvyšuje a snižuje (tzv. "dýchání"). Program toho docílí rychlým spínáním diod v cyklech s proměnlivou délkou svitu (_delayMicroseconds_).
+
+  <img width="418" height="241" alt="image" src="https://github.com/user-attachments/assets/37e2527d-66b1-42c8-9f27-2d76c1a96c86" /> <img width="417" height="242" alt="image" src="https://github.com/user-attachments/assets/08a275ac-24a1-458b-9b1a-24aedb8b0f9e" />
+
+
 - **Režim 6 (Sudé / Liché):** Střídavé blikání sudých a lichých sekcí diod.
+
+  <img width="422" height="243" alt="image" src="https://github.com/user-attachments/assets/244360a9-67e1-46cd-8d42-33668f686b23" /> <img width="420" height="243" alt="image" src="https://github.com/user-attachments/assets/aa5eb5c5-9906-476f-a179-14d2ccd093eb" />
+
+
 - **Režim 7 (Automaticky):** Přehrává pevnou sekvenci animací za sebou.
   - 3x Zleva-doprava - tam a zpátky
   - 3x Pulzování
   - 3x Od středu do stran - tam a zpátky
   - 6x Sudé a liché
   - Zpět na 1…
+
+  <img width="478" height="270" alt="image" src="https://github.com/user-attachments/assets/4783da42-a84a-4330-bc80-bf73f95f3c48" />
+
 - **Režim 8 (Náhodně):** Arduino náhodně vybírá animace (1-6) a přehrává je, čímž zajišťuje neopakující se podívanou.
+
+  <img width="477" height="279" alt="image" src="https://github.com/user-attachments/assets/95b2431f-4fb1-47fa-915d-c7433aba83ab" />
+
 - **Režim 9 (Svítí vše):** Trvalé rozsvícení všech diod.
+  
+  <img width="478" height="288" alt="image" src="https://github.com/user-attachments/assets/e8f0e1c9-9b36-4cea-a60f-e11db1d19c47" />
 
 ## **_Pájení:_**
 
 Náročnější částí byla konstrukce samotné pyramidy. Postupoval jsem metodou pájení "ve vzduchu" podle předem připraveného plánu, aby diody tvořily požadovaný tvar. Postup pájení jednotlivých pater a sekcí:
 
 - 2x LED samostatně.
+
+  <img width="269" height="151" alt="image" src="https://github.com/user-attachments/assets/8264da8d-25fb-470b-83f6-41b392b2d5ed" />
+
 - Spojení 2x zkrácené LED s další LED.
+
+  <img width="270" height="152" alt="image" src="https://github.com/user-attachments/assets/ffb501e3-8343-4add-9837-fe60acb9d94e" />
+
 - Spojení 2x LED s další LED.
+
+  <img width="273" height="154" alt="image" src="https://github.com/user-attachments/assets/2071e229-959b-4045-ac6d-45565c3c55b0" />
+
 - Spojení 2x zkrácené LED s dvěma dalšími LED.
+
+  <img width="291" height="164" alt="image" src="https://github.com/user-attachments/assets/9a8d5023-16c8-4b8b-903b-3f6f5f52a9b7" />
+
 - Finální vrchol tvořený 3 LED na sobě.
+
+  <img width="311" height="175" alt="image" src="https://github.com/user-attachments/assets/59f93947-4b48-4cc4-9b7d-58edfce9a322" />
 
 ## **_Testování funkcí:_**
 
@@ -139,6 +201,8 @@ Po dokončení zapojení a sestavení zařízení následuje testování. K disp
 ## **_Výsledné zařízení:_**
 
 Po dokončení všech fázích - od prvotního návrhu a 3D tisku, přes pájení konstrukce, až po finální programování a ladění - vzniklo plně funkční dekorativní zařízení. Výsledný produkt splňuje všechny předem stanovené cíle a funguje spolehlivě.
+
+<img width="497" height="279" alt="image" src="https://github.com/user-attachments/assets/d193355c-bd7d-4e75-8dd5-9334a10f8526" />
 
 **Vlastnosti hotové LED pyramidy:**
 
