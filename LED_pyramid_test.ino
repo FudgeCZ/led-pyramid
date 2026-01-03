@@ -3,6 +3,7 @@
 // K dispozici jsou jen 3 režimy - 0 = Vypnuto - 1 = Zleva doprava - 2 = Všechny
 //-------------------------------------------------------------------------
 
+
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
@@ -57,9 +58,9 @@ void aktualizujDisplej() {
   lcd.clear(); 
   
   lcd.setCursor(0, 0); 
-  lcd.print("REZIM: ");
+  lcd.print("R: ");
   lcd.print(rezim);
-  lcd.print("  Test mód");
+  lcd.print("    Test mod");
   
   lcd.setCursor(0, 1); 
   
