@@ -1,7 +1,7 @@
-## LED_pyramid.ino = Hlavní program
-## LED_pyramid_test.ino = Program pro testování funkčnosti
-## display-holder.f3d = 3D model pro úpravy v Autodesk Fusion
-## display-holder.stl = 3D model pro výtisk
+### LED_pyramid.ino = Hlavní program
+### LED_pyramid_test.ino = Program pro testování funkčnosti
+### display-holder.f3d = 3D model pro úpravy v Autodesk Fusion
+### display-holder.stl = 3D model pro výtisk
 
 # Ročníková práce - Svítící LED pyramida
 
