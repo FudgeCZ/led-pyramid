@@ -6,13 +6,13 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // --- NASTAVENÍ PINŮ ---
 int ledPins[] = {12, 11, 10, 9, 8, 7, 6, 5, 4}; 
-int pocetLed = 9; // Počet led připojených na piny
+int pocetLed = 9;
 int buttonPin = 2; 
 
 // Režimy
 // 1-6 = Animace
 // 7 = Automaticky (Pevná sekvence)
-// 8 = Náhodně
+// 8 = Náhodně (Bez opakování)
 // 9 = Svítí vše
 int rezim = 0; 
 int maxRezim = 9; 
@@ -61,13 +61,11 @@ void aktualizujDisplej() {
   lcd.clear(); 
   
   lcd.setCursor(0, 0); 
-  // Vykreslování čísla režimu
   lcd.print("REZIM: ");
   lcd.print(rezim);
   
   lcd.setCursor(0, 1); 
-
-  // Vykreslování textu
+  
   switch(rezim) {
     case 0: lcd.print("VYPNUTO"); break;
     case 1: lcd.print("ZLEVA DO PRAVA"); break;
@@ -82,10 +80,10 @@ void aktualizujDisplej() {
   }
 }
 
-// --- REŽIM 7: PEVNÁ SEKVENCE ---
+// --- REŽIM 7: PEVNÁ SEKVENCE (PENDLOVÁNÍ) ---
 void animaceAutomatickyPevna() {
   
-  // 1. ČÁST: LEVÁ/PRAVÁ (3x tam a zpět)
+  // 1. ČÁST: PENDLOVÁNÍ LEVÁ/PRAVÁ (3x tam a zpět)
   for(int i=0; i<3; i++) {
     animaceZlevaDoprava(); 
     if (rezim != 7) return; 
@@ -94,13 +92,13 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 2. ČÁST: 3x PULZ
+  // 2. ČÁST: 3x PULZ (NOVÉ)
   for(int i=0; i<3; i++) {
     animacePulzovani();
     if (rezim != 7) return;
   }
 
-  // 3. ČÁST: STŘED/STRANY (3x ven a dovnitř)
+  // 3. ČÁST: PENDLOVÁNÍ STŘED/STRANY (3x ven a dovnitř)
   for(int i=0; i<3; i++) {
     animaceStredDoStran();   
     if (rezim != 7) return;
@@ -109,7 +107,7 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 4. ČÁST: 6x SUDÉ/LICHÉ
+  // 4. ČÁST: 6x SUDÉ/LICHÉ (NOVÉ)
   for(int i=0; i<6; i++) {
     animaceSudeLiche();
     if (rezim != 7) return;
@@ -151,7 +149,7 @@ void animaceNahodne() {
   }
 }
 
-// --- OVLÁDÁNÍ TLAČÍTKEM ---
+// --- OVLÁDÁNÍ ---
 bool kontrolaTlacitka() {
   if (digitalRead(buttonPin) == LOW) {
     delay(50); 
@@ -219,18 +217,18 @@ void animacePulzovani() {
   int krokStmivani = 1; 
   for (int jas = 0; jas <= 50; jas += krokStmivani) {
     for (int t = 0; t < 15; t++) { 
-       rychleZapnoutVse(); 
+       rozsvititVse(); 
        delayMicroseconds(jas * 30);        
-       rychleVypnoutVse(); 
+       vypnoutVse();
        delayMicroseconds((50 - jas) * 50); 
        if (kontrolaTlacitka()) return; 
     }
   }
   for (int jas = 50; jas >= 0; jas -= krokStmivani) {
     for (int t = 0; t < 15; t++) { 
-       rychleZapnoutVse(); 
+       rozsvititVse();
        delayMicroseconds(jas * 30);        
-       rychleVypnoutVse(); 
+       vypnoutVse();
        delayMicroseconds((50 - jas) * 50); 
        if (kontrolaTlacitka()) return; 
     }
@@ -253,7 +251,5 @@ void animaceSudeLiche() {
 }
 
 // --- POMOCNÉ FUNKCE ---
-void rychleZapnoutVse() { for (int i = 0; i < pocetLed; i++) digitalWrite(ledPins[i], HIGH); }
-void rychleVypnoutVse() { for (int i = 0; i < pocetLed; i++) digitalWrite(ledPins[i], LOW); }
 void vypnoutVse() { for (int i = 0; i < pocetLed; i++) digitalWrite(ledPins[i], LOW); }
 void rozsvititVse() { for (int i = 0; i < pocetLed; i++) digitalWrite(ledPins[i], HIGH); }
