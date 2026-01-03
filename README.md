@@ -1,9 +1,9 @@
-### LED_pyramid.ino = Hlavní program
-### LED_pyramid_test.ino = Program pro testování funkčnosti
-### display-holder.f3d = 3D model pro úpravy v Autodesk Fusion
-### display-holder.stl = 3D model pro výtisk
+### [**LED_pyramid.ino**](https://github.com/FudgeCZ/led-pyramid/blob/main/LED_pyramid.ino) **= Hlavní program**
+### [**LED_pyramid_test.ino**](https://github.com/FudgeCZ/led-pyramid/blob/main/LED_pyramid_test.ino) **= Program pro testování funkčnosti**
+### [**display-holder.f3d**](https://github.com/FudgeCZ/led-pyramid/blob/main/display-holder.f3d) **= 3D model pro úpravy v Autodesk Fusion**
+### [**display-holder.stl**](https://github.com/FudgeCZ/led-pyramid/blob/main/display-holder.stl) **= 3D model pro výtisk**
 
-# Ročníková práce - Svítící LED pyramida
+# Ročníková práce MET - Svítící LED pyramida
 
 - Jméno : Novák František
 
@@ -41,7 +41,8 @@
 
 Pro svou ročníkovou práci jsem si zvolil **svítící LED pyramidu**. Hlavním důvodem mého výběru byla snaha vytvořit zařízení, které je vizuálně atraktivním projektem a zároveň i zajímavý a naučný.
 
-Tento projekt pro mě představoval ideální výzvu, protože kombinuje několik klíčových disciplín: od návrhu zapojení součástek, přes manuální zručnost při konstrukci pyramidy, až po tvorbu programu pro Arduino. Zvláštní motivací pro mě byla práce s moderními komponenty, jako je Arduino Nano s rozhraním USB-C, a implementace uživatelského rozhraní pomocí LCD displeje.
+Tento projekt pro mě představoval ideální výzvu, protože kombinuje: návrh zapojení součástek, manuální zručnost při konstrukci pyramidy, a tvorbu programu pro Arduino. Zvláštní motivací pro mě byla práce s moderními komponenty, jako je Arduino Nano s rozhraním USB-C, a implementace uživatelského rozhraní pomocí LCD displeje.
+
 
 ## **_Co je to a princip:_**
 
@@ -57,9 +58,9 @@ Hlavním cílem této ročníkové práce bylo navrhnout a sestavit komplexní e
 
 - **Programování v Arduino IDE:** Osvojit si práci s poli (arrays) pro efektivní správu většího množství pinů a pochopit logiku neblokujícího kódu. Důležitým cílem bylo naprogramovat systém tak, aby animace byly plynulé a ovládání responzivní.
 - **Implementace komunikačních protokolů:** Naučit se pracovat s knihovnou LiquidCrystal_I2C a zprovoznit komunikaci mezi arduinem a displejem pouze pomocí dvou datových vodičů (SDA, SCL).
-- **Pájení:** Zapájet LED diody do tvaru pyramidy.
 - **Tvorba algoritmů:** Naprogramovat sekvence animací, jako je „Zleva doprava", střídání sudých a lichých řad nebo náhodný výběr efektů.
 - **Finalizace produktu:** Dotáhnout projekt do podoby, kdy je mechanicky stabilní (využití 3D tisku pro držáky displeje) a spolehlivě funguje při opakovaném použití.
+
 
 ## **_Použité komponenty:_**
 
@@ -95,6 +96,8 @@ Zapojení je realizováno na nepájivém poli. Projekt byl nejprve zapojen v onl
 
 Zařízení se ovládá jedním tlačítkem. Systém obsahuje celkem **10 režimů** (0-9). Při každém stisku tlačítka se hodnota proměnné režim zvýší o 1. Po dosažení čísla 9 se cyklus vrátí na 0.
 
+Režimy se dají jednoduše přidat a upravit, stačí přidat funkce a text pro displej.
+
 **Seznam naprogramovaných režimů:**
 
 - **Režim 0 (Vypnuto):** Všechny LED zhasnou, zařízení čeká.
@@ -115,7 +118,7 @@ Zařízení se ovládá jedním tlačítkem. Systém obsahuje celkem **10 režim
 
 ## **_Pájení:_**
 
-Nejnáročnější částí byla konstrukce samotné pyramidy. Postupoval jsem metodou pájení "ve vzduchu" podle předem připraveného plánu, aby diody tvořily požadovaný tvar. Postup pájení jednotlivých pater a sekcí:
+Náročnější částí byla konstrukce samotné pyramidy. Postupoval jsem metodou pájení "ve vzduchu" podle předem připraveného plánu, aby diody tvořily požadovaný tvar. Postup pájení jednotlivých pater a sekcí:
 
 - 2x LED samostatně.
 - Spojení 2x zkrácené LED s další LED.
@@ -125,13 +128,13 @@ Nejnáročnější částí byla konstrukce samotné pyramidy. Postupoval jsem m
 
 ## **_Testování funkcí:_**
 
-Po dokončení zapojení a sestavení zařízení následuje jedna z nejdůležitějších částí - testování.  
-Testování probíhá po jednotlivých krocích:
+Po dokončení zapojení a sestavení zařízení následuje testování. K dispozici je i testovací program _LED_pyramid_test.ino (viz. Zdroje)_
 
 - **Test napájení:** První zapojení do USB. Kontrola, zda se nerozžhaví žádná součástka a zda svítí kontrolka na Arduinu.
-- **Test LED (Hardware):** Nahrání jednoduchého kódu, který postupně rozsvítil všechny piny _ledPins_, aby se ověřilo, že jsou všechny diody připájeny správně a nejsou špatně dané póly.
+- **Test LED diod:** Nahrání jednoduchého kódu, který rozsvítí všechny piny _ledPins_, aby se ověřilo, zda jsou všechny diody připájeny správně a nejsou špatně dané póly.
 - **Test I2C Displeje:** Ověření adresy displeje (standardně 0x27) a nastavení kontrastu potenciometrem na zadní straně modulu, aby byl text čitelný.
 - **Test Logiky a Tlačítka:** Zde jsem narazil na problém s odezvou tlačítka během dlouhých animací. Vyřešil jsem to implementací funkce _cekejBezpecne()_, která kontroluje tlačítko i během čekání v animaci. Pokud je stisknuto, animace se okamžitě přeruší (return) a přepne se režim.
+
 
 ## **_Výsledné zařízení:_**
 
@@ -166,6 +169,8 @@ Cílem mé ročníkové práce bylo vytvořit „Svítící LED pyramidu", kter�
 [roboticsbackend.com/arduino-push-button-tutorial/](https://roboticsbackend.com/arduino-push-button-tutorial/)
 
 [projecthub.arduino.cc/led-chaser-using-arduino](https://projecthub.arduino.cc/syedmahamood/led-chaser-using-arduino-uno-fdc5db)
+
+[github.com/johnrickman/LiquidCrystal_I2C](https://github.com/johnrickman/LiquidCrystal_I2C)
 
 **Kód a 3D model na zkopírování:**
 
