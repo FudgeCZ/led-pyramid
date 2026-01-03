@@ -10,6 +10,7 @@ int pocetLed = 9;
 int buttonPin = 2; 
 
 // Režimy
+// 0 = Vypnuto
 // 1-6 = Animace
 // 7 = Automaticky (Pevná sekvence)
 // 8 = Náhodně (Bez opakování)
@@ -49,8 +50,7 @@ void loop() {
     case 4: animaceStranyDoStredu(); break;
     case 5: animacePulzovani(); break;
     case 6: animaceSudeLiche(); break;
-    
-    case 7: animaceAutomatickyPevna(); break; // <--- TADY JE ZMĚNA
+    case 7: animaceAutomatickyPevna(); break; 
     case 8: animaceNahodne(); break;          
     case 9: rozsvititVse(); delay(10); break; 
   }
@@ -80,10 +80,117 @@ void aktualizujDisplej() {
   }
 }
 
-// --- REŽIM 7: PEVNÁ SEKVENCE (PENDLOVÁNÍ) ---
+// --- OVLÁDÁNÍ ---
+bool kontrolaTlacitka() {
+  if (digitalRead(buttonPin) == LOW) {
+    delay(50); 
+    if (digitalRead(buttonPin) == LOW) {
+      rezim++;
+      if (rezim > maxRezim) rezim = 0; 
+      
+      vypnoutVse(); 
+      aktualizujDisplej(); 
+      
+      while (digitalRead(buttonPin) == LOW) delay(10);
+      return true; 
+    }
+  }
+  return false; 
+}
+
+bool cekejBezpecne(int casMs) {
+  int kroky = casMs / 10; 
+  for (int k = 0; k < kroky; k++) {
+    delay(10);
+    if (kontrolaTlacitka()) return true; 
+  }
+  return false;
+}
+
+// ----- ANIMACE -----
+
+// --- REŽIM 1: Zleva doprava ---
+void animaceZlevaDoprava() {
+  for (int i = pocetLed - 1; i >= 0; i--) { digitalWrite(ledPins[i], HIGH); if (cekejBezpecne(rychlost)) return; }
+  for (int i = pocetLed - 1; i >= 0; i--) { digitalWrite(ledPins[i], LOW); if (cekejBezpecne(rychlost)) return; }
+}
+
+// --- REŽIM 2: Zprava doleva ---
+void animaceZpravaDoleva() {
+  for (int i = 0; i < pocetLed; i++) { digitalWrite(ledPins[i], HIGH); if (cekejBezpecne(rychlost)) return; }
+  for (int i = 0; i < pocetLed; i++) { digitalWrite(ledPins[i], LOW); if (cekejBezpecne(rychlost)) return; }
+}
+
+// --- REŽIM 3: Od středu do stran ---
+void animaceStredDoStran() {
+  int stred = 4; 
+  for (int i = 0; i <= 4; i++) {
+    digitalWrite(ledPins[stred - i], HIGH); digitalWrite(ledPins[stred + i], HIGH);
+    if (cekejBezpecne(rychlost)) return;
+  }
+  for (int i = 0; i <= 4; i++) {
+    digitalWrite(ledPins[stred - i], LOW); digitalWrite(ledPins[stred + i], LOW);
+    if (cekejBezpecne(rychlost)) return;
+  }
+  if (cekejBezpecne(pauzaKonec)) return;
+}
+
+// --- REŽIM 4: Od stran do středu ---
+void animaceStranyDoStredu() {
+  for (int i = 0; i <= 4; i++) {
+    digitalWrite(ledPins[i], HIGH); digitalWrite(ledPins[8 - i], HIGH);     
+    if (cekejBezpecne(rychlost)) return;
+  }
+  for (int i = 0; i <= 4; i++) {
+    digitalWrite(ledPins[i], LOW); digitalWrite(ledPins[8 - i], LOW);
+    if (cekejBezpecne(rychlost)) return;
+  }
+  if (cekejBezpecne(pauzaKonec)) return;
+}
+
+// --- REŽIM 5: Pulzování ---
+void animacePulzovani() {
+  int krokStmivani = 1; 
+  for (int jas = 0; jas <= 50; jas += krokStmivani) {
+    for (int t = 0; t < 15; t++) { 
+       rozsvititVse(); 
+       delayMicroseconds(jas * 30);        
+       vypnoutVse();
+       delayMicroseconds((50 - jas) * 50); 
+       if (kontrolaTlacitka()) return; 
+    }
+  }
+  for (int jas = 50; jas >= 0; jas -= krokStmivani) {
+    for (int t = 0; t < 15; t++) { 
+       rozsvititVse();
+       delayMicroseconds(jas * 30);        
+       vypnoutVse();
+       delayMicroseconds((50 - jas) * 50); 
+       if (kontrolaTlacitka()) return; 
+    }
+  }
+  if (cekejBezpecne(100)) return;
+}
+
+// --- REŽIM 6: Sudé/liché ---
+void animaceSudeLiche() {
+  for (int i = 0; i < pocetLed; i++) {
+    if (i % 2 == 0) digitalWrite(ledPins[i], HIGH);
+    else digitalWrite(ledPins[i], LOW);
+  }
+  if (cekejBezpecne(rychlost * 4)) return;
+
+  for (int i = 0; i < pocetLed; i++) {
+    if (i % 2 == 0) digitalWrite(ledPins[i], LOW);
+    else digitalWrite(ledPins[i], HIGH);
+  }
+  if (cekejBezpecne(rychlost * 4)) return;
+}
+
+// --- REŽIM 7: PEVNÁ SEKVENCE ---
 void animaceAutomatickyPevna() {
   
-  // 1. ČÁST: PENDLOVÁNÍ LEVÁ/PRAVÁ (3x tam a zpět)
+  // 1. ČÁST: LEVÁ/PRAVÁ (3x tam a zpět)
   for(int i=0; i<3; i++) {
     animaceZlevaDoprava(); 
     if (rezim != 7) return; 
@@ -92,13 +199,13 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 2. ČÁST: 3x PULZ (NOVÉ)
+  // 2. ČÁST: 3x PULZ
   for(int i=0; i<3; i++) {
     animacePulzovani();
     if (rezim != 7) return;
   }
 
-  // 3. ČÁST: PENDLOVÁNÍ STŘED/STRANY (3x ven a dovnitř)
+  // 3. ČÁST: STŘED/STRANY (3x ven a dovnitř)
   for(int i=0; i<3; i++) {
     animaceStredDoStran();   
     if (rezim != 7) return;
@@ -107,7 +214,7 @@ void animaceAutomatickyPevna() {
     if (rezim != 7) return;
   }
 
-  // 4. ČÁST: 6x SUDÉ/LICHÉ (NOVÉ)
+  // 4. ČÁST: 6x SUDÉ/LICHÉ
   for(int i=0; i<6; i++) {
     animaceSudeLiche();
     if (rezim != 7) return;
@@ -147,107 +254,6 @@ void animaceNahodne() {
   if (pocetOpakovani >= 3) { 
     pocetOpakovani = 0;
   }
-}
-
-// --- OVLÁDÁNÍ ---
-bool kontrolaTlacitka() {
-  if (digitalRead(buttonPin) == LOW) {
-    delay(50); 
-    if (digitalRead(buttonPin) == LOW) {
-      rezim++;
-      if (rezim > maxRezim) rezim = 0; 
-      
-      vypnoutVse(); 
-      aktualizujDisplej(); 
-      
-      while (digitalRead(buttonPin) == LOW) delay(10);
-      return true; 
-    }
-  }
-  return false; 
-}
-
-bool cekejBezpecne(int casMs) {
-  int kroky = casMs / 10; 
-  for (int k = 0; k < kroky; k++) {
-    delay(10);
-    if (kontrolaTlacitka()) return true; 
-  }
-  return false;
-}
-
-// --- ZÁKLADNÍ ANIMACE ---
-
-void animaceZlevaDoprava() {
-  for (int i = pocetLed - 1; i >= 0; i--) { digitalWrite(ledPins[i], HIGH); if (cekejBezpecne(rychlost)) return; }
-  for (int i = pocetLed - 1; i >= 0; i--) { digitalWrite(ledPins[i], LOW); if (cekejBezpecne(rychlost)) return; }
-}
-
-void animaceZpravaDoleva() {
-  for (int i = 0; i < pocetLed; i++) { digitalWrite(ledPins[i], HIGH); if (cekejBezpecne(rychlost)) return; }
-  for (int i = 0; i < pocetLed; i++) { digitalWrite(ledPins[i], LOW); if (cekejBezpecne(rychlost)) return; }
-}
-
-void animaceStredDoStran() {
-  int stred = 4; 
-  for (int i = 0; i <= 4; i++) {
-    digitalWrite(ledPins[stred - i], HIGH); digitalWrite(ledPins[stred + i], HIGH);
-    if (cekejBezpecne(rychlost)) return;
-  }
-  for (int i = 0; i <= 4; i++) {
-    digitalWrite(ledPins[stred - i], LOW); digitalWrite(ledPins[stred + i], LOW);
-    if (cekejBezpecne(rychlost)) return;
-  }
-  if (cekejBezpecne(pauzaKonec)) return;
-}
-
-void animaceStranyDoStredu() {
-  for (int i = 0; i <= 4; i++) {
-    digitalWrite(ledPins[i], HIGH); digitalWrite(ledPins[8 - i], HIGH);     
-    if (cekejBezpecne(rychlost)) return;
-  }
-  for (int i = 0; i <= 4; i++) {
-    digitalWrite(ledPins[i], LOW); digitalWrite(ledPins[8 - i], LOW);
-    if (cekejBezpecne(rychlost)) return;
-  }
-  if (cekejBezpecne(pauzaKonec)) return;
-}
-
-void animacePulzovani() {
-  int krokStmivani = 1; 
-  for (int jas = 0; jas <= 50; jas += krokStmivani) {
-    for (int t = 0; t < 15; t++) { 
-       rozsvititVse(); 
-       delayMicroseconds(jas * 30);        
-       vypnoutVse();
-       delayMicroseconds((50 - jas) * 50); 
-       if (kontrolaTlacitka()) return; 
-    }
-  }
-  for (int jas = 50; jas >= 0; jas -= krokStmivani) {
-    for (int t = 0; t < 15; t++) { 
-       rozsvititVse();
-       delayMicroseconds(jas * 30);        
-       vypnoutVse();
-       delayMicroseconds((50 - jas) * 50); 
-       if (kontrolaTlacitka()) return; 
-    }
-  }
-  if (cekejBezpecne(100)) return;
-}
-
-void animaceSudeLiche() {
-  for (int i = 0; i < pocetLed; i++) {
-    if (i % 2 == 0) digitalWrite(ledPins[i], HIGH);
-    else digitalWrite(ledPins[i], LOW);
-  }
-  if (cekejBezpecne(rychlost * 4)) return;
-
-  for (int i = 0; i < pocetLed; i++) {
-    if (i % 2 == 0) digitalWrite(ledPins[i], LOW);
-    else digitalWrite(ledPins[i], HIGH);
-  }
-  if (cekejBezpecne(rychlost * 4)) return;
 }
 
 // --- POMOCNÉ FUNKCE ---
