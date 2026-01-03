@@ -1,3 +1,8 @@
+//-------------------------------------------------------------------------
+// Temto program slouží k testování lcd disleje a správné zapojení LED
+// K dispozici jsou jen 3 režimy - 0 = Vypnuto - 1 = Zleva doprava - 2 = Všechny
+//-------------------------------------------------------------------------
+
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
